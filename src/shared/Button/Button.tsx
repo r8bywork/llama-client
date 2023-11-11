@@ -16,6 +16,7 @@ const Button: React.FC<iButton> = ({
     [style.filled]: filled,
     [style.primary]: primary,
     [style.secondary]: secondary,
+    [style.hasText]: text,
   });
 
   return (
@@ -26,8 +27,12 @@ const Button: React.FC<iButton> = ({
       className={classNamesButton}
       tabIndex={0}
     >
-      {Icon && <Icon />}
-      {text}
+      <div className={style.textContainer}>{text}</div>
+      {Icon && (
+        <div className={style.svgContainer}>
+          <Icon />
+        </div>
+      )}
     </div>
   );
 };

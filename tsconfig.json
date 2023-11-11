@@ -21,6 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["vite-plugin-svgr/client"]
   },
-  "include": ["src", "declaration.d.ts"],
+  "include": ["src",
+    "src/declaration.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

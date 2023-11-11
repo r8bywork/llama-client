@@ -1,6 +1,7 @@
-// import { ReactComponent as SendIcon } from '../../assets/send.svg';
+import SendIcon from '../../images/Send.svg?react';
 import Button from '../../shared/Button/Button';
 import Input from '../../shared/Input/Input';
+import React from 'react';
 const ChatContainer: React.FC = () => {
   const onBtnClick = () => {
     console.log('test');
@@ -10,9 +11,9 @@ const ChatContainer: React.FC = () => {
       <Input />
       <Button
         text={'New Chat'}
-        filled
-        // secondary
-        // Icon={SendIcon}
+        // filled
+        secondary
+        Icon={SendIcon}
         onHandleClick={onBtnClick}
       />
     </div>

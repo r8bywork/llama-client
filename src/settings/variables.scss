@@ -14,3 +14,17 @@ $secondary-button-font-weight: 400;
 //filled button
 $filled-button-background: #000;
 $filled-button-color: #fff;
+
+
+@mixin secondary-button-styles {
+  padding: 6px 12px;
+  color: $secondary-button-color;
+  background: $secondary-button-background;
+  font-size: $secondary-button-font-size;
+  font-weight: $secondary-button-font-weight;
+}
+
+@mixin filled-button-styles {
+  background: $filled-button-background;
+  color: $filled-button-color;
+}
