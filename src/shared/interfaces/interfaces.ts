@@ -8,5 +8,21 @@ export interface iButton {
   primary?: boolean;
   secondary?: boolean;
   Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  // Icon?: JSX.Element;
+}
+
+export interface iChatArea {
+  messages: { id: number; sender: string; text: string }[];
+}
+
+export interface iInput {
+  onHandleChange: (input: string) => void;
+  onHandleClick: () => void;
+  prompt: string;
+  placeholder?: string;
+  loading?: boolean;
+}
+
+export interface iMessage {
+  text: string;
+  sender: string;
 }

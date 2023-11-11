@@ -1,22 +1,49 @@
-import SendIcon from '../../assets/Send.svg?react';
-import Button from '../../shared/Button/Button';
+import axios from 'axios';
+import React, { useState } from 'react';
+import ChatArea from '../../shared/ChatArea/ChatArea';
 import Input from '../../shared/Input/Input';
-import React from 'react';
+import { concatenateResponses } from '../../utils/utils';
+import styles from './ChatContainer.module.scss';
+
 const ChatContainer: React.FC = () => {
-  const onBtnClick = () => {
-    console.log('test');
+  const [messages, setMessages] = useState<{ id: number; sender: string; text: string }[]>([]);
+  const [prompt, setPrompt] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleSendMessage = async () => {
+    setLoading(true);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { id: prevMessages.length + 1, sender: 'user', text: prompt },
+    ]);
+    const res = await axios.post('http://localhost:11434/api/generate', {
+      model: 'mistral',
+      prompt: prompt,
+    });
+    const fullResponse = concatenateResponses(res.data);
+    setLoading(false);
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { id: prevMessages.length + 1, sender: 'ai', text: fullResponse },
+    ]);
   };
+
+  const onHandleChange = (input: string) => {
+    setPrompt(input);
+  };
+
   return (
-    <div>
-      <Input />
-      <Button
-        text={'New Chat'}
-        filled
-        secondary
-        Icon={SendIcon}
-        onHandleClick={onBtnClick}
+    <div className={styles.ChatContainer}>
+      <ChatArea messages={messages} />
+      <Input
+        loading={loading}
+        onHandleClick={handleSendMessage}
+        onHandleChange={onHandleChange}
+        prompt={prompt}
       />
     </div>
   );
 };
+
 export default ChatContainer;
