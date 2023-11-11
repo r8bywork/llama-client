@@ -7,4 +7,6 @@ export interface iButton {
   filled?: boolean;
   primary?: boolean;
   secondary?: boolean;
+  Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  // Icon?: JSX.Element;
 }

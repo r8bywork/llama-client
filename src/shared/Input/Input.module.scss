@@ -1,0 +1,29 @@
+.inputContainer {
+  display: flex;
+  align-items: center;
+  max-width: 800px;
+  justify-content: space-between;
+  border-radius: 8px;
+  border: 1px solid #e7e7e7;
+
+  &.focused {
+    border-color: #000;
+  }
+
+  .message {
+    color: #919191;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    // flex-shrink: 0;
+  }
+
+  input {
+    margin: 12px 16px;
+    flex-grow: 1;
+    border: none;
+    height: 20px;
+    outline: none;
+  }
+}
