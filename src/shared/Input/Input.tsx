@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import Button from '../Button/Button';
 import styles from './Input.module.scss';
-
+import SendIcon from '../../assets/Send.svg?react';
 const Input: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -26,8 +26,8 @@ const Input: React.FC = () => {
       />
       <Button
         styles={{ margin: '12px 16px' }}
-        text='Send!'
-        secondary
+        // secondary
+        Icon={SendIcon}
       />
     </div>
   );

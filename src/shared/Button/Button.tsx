@@ -17,6 +17,7 @@ const Button: React.FC<iButton> = ({
     [style.primary]: primary,
     [style.secondary]: secondary,
     [style.hasText]: text,
+    [style.hasSvg]: Icon,
   });
 
   return (

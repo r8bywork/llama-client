@@ -1,4 +1,4 @@
-import SendIcon from '../../images/Send.svg?react';
+import SendIcon from '../../assets/Send.svg?react';
 import Button from '../../shared/Button/Button';
 import Input from '../../shared/Input/Input';
 import React from 'react';
@@ -11,7 +11,7 @@ const ChatContainer: React.FC = () => {
       <Input />
       <Button
         text={'New Chat'}
-        // filled
+        filled
         secondary
         Icon={SendIcon}
         onHandleClick={onBtnClick}

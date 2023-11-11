@@ -10,11 +10,18 @@
     font-weight: $button-font-weight;
     align-items: center;
 
+    .svgContainer {
+      display: flex;
+    }
+
     &.hasText {
       .svgContainer {
         display: flex;
         margin-left: 8px;
       }
+    }
+    &.hasSvg {
+      padding: 0;
     }
 
     &.secondary {
