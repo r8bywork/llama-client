@@ -12,6 +12,7 @@ const ChatContainer: React.FC = () => {
 
   const handleSendMessage = async () => {
     setLoading(true);
+    setPrompt('');
     setMessages((prevMessages) => [
       ...prevMessages,
       { id: prevMessages.length + 1, sender: 'user', text: prompt },
