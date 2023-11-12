@@ -33,9 +33,11 @@ const Input: React.FC<iInput> = ({
         }}
       />
       <Button
+        // text={'asd'}
         onHandleClick={onHandleClick}
         styles={{ margin: '12px 16px' }}
-        // secondary
+        secondary
+        // filled
         Icon={SendIcon}
       />
     </div>

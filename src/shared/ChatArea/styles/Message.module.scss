@@ -1,27 +1,18 @@
 .Message {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  border-radius: 8px;
-  color: #888;
+  color: #e3e3e3;
   font-size: 18px;
   font-weight: 400;
+  border-radius: 15px;
+  margin: 10px;
+  padding: 24px 24px;
 }
 
-.UserMessage {
-  max-width: 50%;
-  width: fit-content;
-  margin: 10px 10px 10px auto;
-  border-radius: 10px 10px 0 10px;
-  background-color: #248bf5;
-  color: #fff;
-}
+// .UserMessage {
+// color: #fff;
+// }
 
 .AiMessage {
-  color: #000;
-  max-width: 50%;
-  width: fit-content;
-  margin: 10px auto 10px 10px;
-  border-radius: 10px 10px 10px 0;
-  background-color: #e5e5ea;
+  background-color: #131314;
 }

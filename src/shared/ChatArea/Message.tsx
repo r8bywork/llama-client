@@ -29,6 +29,9 @@
 
 // export default Message;
 
+// ```python print("Hello, World!") ````
+// В этом коде используется `print` функция в Python для вывода строки на экран. Эта строка содержит текст "Hello, World!", который будет печататься на экране с помощью `print`.
+
 import classNames from 'classnames';
 import React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -60,6 +63,8 @@ const Message: React.FC<iMessage> = ({ text, sender }) => {
               customStyle={{
                 padding: '25px',
                 marginTop: '10px',
+                fontSize: '13px',
+                borderRadius: '8px',
               }}
             >
               {part}

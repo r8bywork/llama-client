@@ -5,18 +5,13 @@
   justify-content: space-between;
   border-radius: 8px;
   border: 1px solid #e7e7e7;
-
   &.focused {
-    border-color: #000;
+    border-color: #4285f4;
   }
 
-  .message {
-    color: #919191;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    // flex-shrink: 0;
+  .messageContainer {
+    color: #fff;
+    font-size: 18px;
   }
 
   input {
@@ -25,8 +20,7 @@
     border: none;
     height: 20px;
     outline: none;
-    &:disabled {
-      background-color: transparent;
-    }
+    color: #fff;
+    background-color: transparent;
   }
 }

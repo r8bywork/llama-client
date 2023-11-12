@@ -1,20 +1,20 @@
 //default button
 $button-padding: 10px 20px;
-$button-border-radius: 8px;
+$button-border-radius: 15px;
 $button-font-size: 16px;
 $button-font-weight: 500;
 $primary-color: #000;
 
 //secondary button
 $secondary-button-color: #585858;
-$secondary-button-background: #eee;
+$secondary-button-background: #d0bcff;
 $secondary-button-font-size: 14px;
 $secondary-button-font-weight: 400;
 
 //filled button
-$filled-button-background: #000;
-$filled-button-color: #fff;
-
+$filled-button-background: rgba(208, 188, 255, 0.3);
+$filled-button-color: #d0bcff;
+$filled-button-outline: #938f99;
 
 @mixin secondary-button-styles {
   padding: 6px 12px;
@@ -27,4 +27,5 @@ $filled-button-color: #fff;
 @mixin filled-button-styles {
   background: $filled-button-background;
   color: $filled-button-color;
+  border: 1px solid $filled-button-outline;
 }
