@@ -16,7 +16,6 @@ export interface iChatArea {
 
 export interface iInput {
   onHandleChange: (input: string) => void;
-  onHandleClick: () => void;
   prompt: string;
   placeholder?: string;
   loading?: boolean;

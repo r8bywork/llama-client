@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import SendIcon from '../../assets/Send.svg?react';
+import Button from '../../shared/Button/Button';
 import ChatArea from '../../shared/ChatArea/ChatArea';
 import Input from '../../shared/Input/Input';
 import { concatenateResponses } from '../../utils/utils';
 import styles from './ChatContainer.module.scss';
-
 const ChatContainer: React.FC = () => {
   const [messages, setMessages] = useState<{ id: number; sender: string; text: string }[]>([]);
   const [prompt, setPrompt] = useState<string>('');
@@ -36,13 +37,24 @@ const ChatContainer: React.FC = () => {
 
   return (
     <div className={styles.ChatContainer}>
-      <ChatArea messages={messages} />
-      <Input
-        loading={loading}
-        onHandleClick={handleSendMessage}
-        onHandleChange={onHandleChange}
-        prompt={prompt}
-      />
+      <div className={styles.ChatAreaContainer}>
+        <ChatArea messages={messages} />
+      </div>
+      <div className={styles.inputContainer}>
+        <Input
+          loading={loading}
+          onHandleChange={onHandleChange}
+          prompt={prompt}
+        />
+        <Button
+          // text={'asd'}
+          onHandleClick={handleSendMessage}
+          styles={{ marginLeft: '12px', padding: '16px' }}
+          secondary
+          // filled
+          Icon={SendIcon}
+        />
+      </div>
     </div>
   );
 };

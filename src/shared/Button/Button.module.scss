@@ -5,7 +5,6 @@
   display: flex;
   border-radius: $button-border-radius;
   color: $primary-color;
-  // padding: $button-padding;
   font-size: $button-font-size;
   font-weight: $button-font-weight;
   align-items: center;
@@ -19,9 +18,6 @@
       display: flex;
       margin-left: 8px;
     }
-  }
-  &.hasSvg {
-    padding: 0;
   }
 
   &.secondary {
