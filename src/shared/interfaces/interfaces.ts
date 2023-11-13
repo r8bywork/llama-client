@@ -26,3 +26,7 @@ export interface iMessage {
   text: string;
   sender: string;
 }
+
+export interface iSideBar {
+  isOpen: boolean;
+}

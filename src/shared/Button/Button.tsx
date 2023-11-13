@@ -28,12 +28,12 @@ const Button: React.FC<iButton> = ({
       className={classNamesButton}
       tabIndex={0}
     >
-      <div className={style.textContainer}>{text}</div>
       {Icon && (
         <div className={style.svgContainer}>
           <Icon />
         </div>
       )}
+      <div className={style.textContainer}>{text}</div>
     </div>
   );
 };

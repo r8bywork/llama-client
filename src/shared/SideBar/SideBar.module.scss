@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+}
+
+.menuButton {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 13px;
+}
+
+.sidebar {
+  color: white;
+  width: 0;
+  overflow: hidden;
+  transition: width 0.1s ease-in-out;
+}
+
+.open {
+  padding: 10px;
+  width: 300px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.menu ul > li {
+  border: 1px solid white;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: left;
+}
