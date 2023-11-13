@@ -16,9 +16,10 @@ export interface iChatArea {
 
 export interface iInput {
   onHandleChange: (input: string) => void;
-  prompt: string;
+  prompt?: string;
   placeholder?: string;
   loading?: boolean;
+  style?: CSSProperties;
 }
 
 export interface iMessage {

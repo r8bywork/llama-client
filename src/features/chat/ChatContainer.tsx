@@ -45,11 +45,12 @@ const ChatContainer: React.FC = () => {
           loading={loading}
           onHandleChange={onHandleChange}
           prompt={prompt}
+          style={{ margin: '15px' }}
         />
         <Button
           // text={'asd'}
           onHandleClick={handleSendMessage}
-          styles={{ marginLeft: '12px', padding: '16px' }}
+          styles={{ padding: '16px' }}
           secondary
           // filled
           Icon={SendIcon}

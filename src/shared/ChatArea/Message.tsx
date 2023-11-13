@@ -1,41 +1,11 @@
-// import classNames from 'classnames';
-// import React from 'react';
-// import SyntaxHighlighter from 'react-syntax-highlighter';
-// import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-// import { iMessage } from '../interfaces/interfaces';
-// import styles from './styles/Message.module.scss';
-
-// const Message: React.FC<iMessage> = ({ text, sender }) => {
-//   const messageClass = classNames(styles.Message, {
-//     [styles.UserMessage]: sender === 'user',
-//     [styles.AiMessage]: sender === 'ai',
-//   });
-
-//   return (
-//     <div>
-//       <div className={messageClass}>{text}</div>
-//       <SyntaxHighlighter
-//         language='python'
-//         style={atomOneDark}
-//         customStyle={{
-//           padding: '25px',
-//         }}
-//       >
-//         {text}
-//       </SyntaxHighlighter>
-//     </div>
-//   );
-// };
-
-// export default Message;
-
 // ```python print("Hello, World!") ````
 // В этом коде используется `print` функция в Python для вывода строки на экран. Эта строка содержит текст "Hello, World!", который будет печататься на экране с помощью `print`.
 
 import classNames from 'classnames';
 import React from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { v4 } from 'uuid';
+import CodeBlock from '../CodeBlock/CodeBlock';
+import TextBlock from '../TextBlock/TextBlock';
 import { iMessage } from '../interfaces/interfaces';
 import styles from './styles/Message.module.scss';
 
@@ -46,32 +16,30 @@ const Message: React.FC<iMessage> = ({ text, sender }) => {
   });
 
   const codeBlockRegex = /```([a-zA-Z]*)\n([\s\S]*?)\n```/gm;
-  const parts = text.split(codeBlockRegex);
+  const parts = text.split(codeBlockRegex).filter(Boolean);
 
   return (
     <div className={messageClass}>
       {parts.map((part, index) => {
-        if (index % 3 === 0) {
-          return <div key={index}>{part}</div>;
-        } else if (index % 3 === 2) {
-          const language = parts[index - 1];
-          return (
-            <SyntaxHighlighter
-              key={index}
-              language={language}
-              style={atomOneDark}
-              customStyle={{
-                padding: '25px',
-                marginTop: '10px',
-                fontSize: '13px',
-                borderRadius: '8px',
-              }}
-            >
-              {part}
-            </SyntaxHighlighter>
-          );
-        } else {
-          return null;
+        const language = parts[index - 1];
+        switch (index % 2) {
+          case 0:
+            return (
+              <TextBlock
+                key={v4() + index}
+                line={part}
+              />
+            );
+          case 1:
+            return (
+              <CodeBlock
+                key={v4() + index}
+                language={language}
+                code={part}
+              />
+            );
+          default:
+            return null;
         }
       })}
     </div>
