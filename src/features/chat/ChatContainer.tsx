@@ -36,25 +36,27 @@ const ChatContainer: React.FC = () => {
   };
 
   return (
-    <div className={styles.ChatContainer}>
-      <div className={styles.ChatAreaContainer}>
-        <ChatArea messages={messages} />
-      </div>
-      <div className={styles.inputContainer}>
-        <Input
-          loading={loading}
-          onHandleChange={onHandleChange}
-          prompt={prompt}
-          style={{ margin: '15px' }}
-        />
-        <Button
-          // text={'asd'}
-          onHandleClick={handleSendMessage}
-          styles={{ padding: '16px' }}
-          secondary
-          // filled
-          Icon={SendIcon}
-        />
+    <div className={styles.background}>
+      <div className={styles.ChatContainer}>
+        <div className={styles.ChatAreaContainer}>
+          <ChatArea messages={messages} />
+        </div>
+        <div className={styles.inputContainer}>
+          <Input
+            loading={loading}
+            onHandleChange={onHandleChange}
+            prompt={prompt}
+            style={{ margin: '15px' }}
+          />
+          <Button
+            // text={'asd'}
+            onHandleClick={handleSendMessage}
+            styles={{ padding: '16px' }}
+            secondary
+            // filled
+            Icon={SendIcon}
+          />
+        </div>
       </div>
     </div>
   );

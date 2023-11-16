@@ -1,5 +1,6 @@
 .container {
   display: flex;
   margin: 0 auto;
-  background-color: #222327;
+  /* background-color: #222327; */
+  background-color: black;
 }

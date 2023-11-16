@@ -26,14 +26,14 @@ const Message: React.FC<iMessage> = ({ text, sender }) => {
           case 0:
             return (
               <TextBlock
-                key={v4() + index}
+                key={v4()}
                 line={part}
               />
             );
           case 1:
             return (
               <CodeBlock
-                key={v4() + index}
+                key={v4()}
                 language={language}
                 code={part}
               />
