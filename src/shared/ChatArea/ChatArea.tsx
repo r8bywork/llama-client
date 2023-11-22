@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { v4 } from 'uuid';
 import { iChatArea } from '../interfaces/interfaces';
 import Message from './Message';
 import styles from './styles/ChatArea.module.scss';
@@ -21,7 +22,7 @@ const ChatArea: React.FC<iChatArea> = ({ messages }) => {
       >
         {messages.map((message) => (
           <Message
-            key={message.id}
+            key={v4()}
             text={message.text}
             sender={message.sender}
           />
