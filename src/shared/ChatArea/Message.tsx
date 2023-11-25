@@ -1,6 +1,5 @@
 // ```python print("Hello, World!") ````
 // В этом коде используется `print` функция в Python для вывода строки на экран. Эта строка содержит текст "Hello, World!", который будет печататься на экране с помощью `print`.
-
 import classNames from 'classnames';
 import React from 'react';
 import { v4 } from 'uuid';
@@ -15,22 +14,15 @@ const Message: React.FC<iMessage> = ({ text, sender }) => {
     [styles.AiMessage]: sender === 'ai',
   });
 
-  const codeBlockRegex = /```([a-zA-Z]*)\n([\s\S]*?)\n```/gm;
+  // const codeBlockRegex = /```([a-zA-Z]*)\n([\s\S]*?)\n```/gm;
+  const codeBlockRegex = /`{1,3}([a-zA-Z]*)\n([\s\S]*?)\n`{1,3}/g;
   const parts = text.split(codeBlockRegex).filter(Boolean);
-
   return (
     <div className={messageClass}>
       {parts.map((part, index) => {
         const language = parts[index - 1];
-        switch (index % 2) {
-          case 0:
-            return (
-              <TextBlock
-                key={v4()}
-                line={part}
-              />
-            );
-          case 1:
+        switch (index % 4) {
+          case 2:
             return (
               <CodeBlock
                 key={v4()}
@@ -39,7 +31,12 @@ const Message: React.FC<iMessage> = ({ text, sender }) => {
               />
             );
           default:
-            return null;
+            return (
+              <TextBlock
+                key={v4()}
+                line={part}
+              />
+            );
         }
       })}
     </div>
