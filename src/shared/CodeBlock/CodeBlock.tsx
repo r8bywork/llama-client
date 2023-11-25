@@ -18,7 +18,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ language, code }) => {
         borderRadius: '10px',
       }}
     >
-      {code}
+      {code.trim()}
     </SyntaxHighlighter>
   );
 };

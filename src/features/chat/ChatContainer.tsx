@@ -37,7 +37,7 @@ const ChatContainer = () => {
               .map((line: string) => JSON.parse(line));
 
             const lastParsedLine: { response: string } = parsedLines[parsedLines.length - 1];
-
+            console.log(lastParsedLine.response);
             setMessages((prevMessages) => {
               const updatedMessages = [...prevMessages];
               updatedMessages[lastAiMessage] = {
