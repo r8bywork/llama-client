@@ -1,17 +1,8 @@
 import classNames from 'classnames';
-import React from 'react';
 import { iButton } from '../interfaces/interfaces';
 import style from './Button.module.scss';
 
-const Button: React.FC<iButton> = ({
-  text,
-  styles,
-  onHandleClick,
-  filled,
-  primary,
-  secondary,
-  Icon,
-}) => {
+const Button = ({ text, styles, onHandleClick, filled, primary, secondary, Icon }: iButton) => {
   const classNamesButton = classNames(style.button, {
     [style.filled]: filled,
     [style.primary]: primary,
@@ -26,7 +17,7 @@ const Button: React.FC<iButton> = ({
       onClick={onHandleClick}
       onKeyDown={onHandleClick}
       className={classNamesButton}
-      tabIndex={0}
+      // tabIndex={-1}
     >
       {Icon && (
         <div className={style.svgContainer}>

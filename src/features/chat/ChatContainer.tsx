@@ -1,74 +1,58 @@
-// import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import SendIcon from '../../assets/Send.svg?react';
 import Button from '../../shared/Button/Button';
 import ChatArea from '../../shared/ChatArea/ChatArea';
 import Input from '../../shared/Input/Input';
 import styles from './ChatContainer.module.scss';
+import axios from 'axios';
 
-const ChatContainer: React.FC = () => {
+const ChatContainer = () => {
   const [messages, setMessages] = useState<{ id: number; sender: string; text: string }[]>([]);
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  // const handleSendMessage = async () => {
-  //   setLoading(true);
-  //   setPrompt('');
-  //   setMessages((prevMessages) => [...prevMessages, { sender: 'user', text: prompt }]);
-  //   const res = await axios.post('http://localhost:11434/api/generate', {
-  //     model: 'orca-mini',
-  //     prompt: prompt,
-  //     stream: false,
-  //   });
-  //   setLoading(false);
-  //   setMessages((prevMessages) => [...prevMessages, { sender: 'ai', text: res.data.response }]);
-  // };
-
   const handleSendMessage = async () => {
+    const lastAiMessage = messages.length + 1;
     setPrompt('');
     setLoading(true);
+
     setMessages((prevMessages) => [
       ...prevMessages,
       { id: prevMessages.length + 1, sender: 'user', text: prompt },
     ]);
 
-    const res = await fetch('http://localhost:11434/api/generate', {
-      method: 'POST',
-      body: JSON.stringify({
-        model: 'orca-mini',
-        prompt: prompt,
-        stream: true,
-      }),
-    });
-    const reader = res.body?.getReader();
-    const decoder = new TextDecoder('utf-8');
+    await axios
+      .post(
+        'http://localhost:11434/api/generate',
+        {
+          model: 'orca-mini',
+          prompt: prompt,
+          stream: true,
+        },
+        {
+          onDownloadProgress(data) {
+            const parsedLines = data.event.currentTarget.response
+              .split('\n')
+              .filter(Boolean)
+              .map((line: string) => JSON.parse(line));
 
-    while (true) {
-      const chunk = await reader?.read();
-      const { done, value } = chunk;
+            const lastParsedLine: { response: string } = parsedLines[parsedLines.length - 1];
 
-      if (done) {
-        break;
-      }
-
-      const lines = decoder.decode(value).split('\n');
-      const parsedLines = lines.filter(Boolean).map((line) => JSON.parse(line));
-
-      const lastAiMessage = messages.length + 1;
-
-      for (const parsedLine of parsedLines) {
-        const { response } = parsedLine;
-        setMessages((prevMessages) => {
-          const updatedMessages = [...prevMessages];
-          updatedMessages[lastAiMessage] = {
-            ...updatedMessages[lastAiMessage],
-            sender: 'ai',
-            text: `${updatedMessages[lastAiMessage]?.text || ''} ${response}`,
-          };
-          return updatedMessages;
-        });
-      }
-    }
+            setMessages((prevMessages) => {
+              const updatedMessages = [...prevMessages];
+              updatedMessages[lastAiMessage] = {
+                ...updatedMessages[lastAiMessage],
+                sender: 'ai',
+                text: `${updatedMessages[lastAiMessage]?.text || ''}${lastParsedLine.response}`,
+              };
+              return updatedMessages;
+            });
+          },
+        },
+      )
+      .catch((err) => {
+        console.error(err);
+      });
     setLoading(false);
   };
 

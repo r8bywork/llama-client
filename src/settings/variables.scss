@@ -18,6 +18,7 @@ $filled-button-outline: #938f99;
 
 @mixin secondary-button-styles {
   padding: 6px 12px;
+  margin: 15px;
   color: $secondary-button-color;
   background: $secondary-button-background;
   font-size: $secondary-button-font-size;
