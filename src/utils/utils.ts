@@ -1,3 +1,5 @@
+import { MessageType } from '../shared/interfaces/interfaces';
+
 export const concatenateResponses = (data: string): string => {
   try {
     const responses = data
@@ -12,3 +14,20 @@ export const concatenateResponses = (data: string): string => {
     return '';
   }
 };
+
+export function updateMessagesWithAiResponse(
+  prevMessages: MessageType[],
+  parsedLines: { response: string }[],
+  lastAiMessage: number,
+): MessageType[] {
+  const lastParsedLine: { response: string } = parsedLines[parsedLines.length - 1];
+  const updatedMessages = [...prevMessages];
+  updatedMessages[lastAiMessage] = {
+    ...updatedMessages[lastAiMessage],
+    sender: 'ai',
+    text: `${updatedMessages[lastAiMessage]?.text || ''}${lastParsedLine.response}`,
+    date: new Date(),
+  };
+
+  return updatedMessages;
+}

@@ -10,6 +10,13 @@ export interface iButton {
   Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 
+export interface MessageType {
+  id: number;
+  sender: string;
+  text: string;
+  date: Date;
+}
+
 export interface iInput {
   onHandleChange: (input: string) => void;
   prompt?: string;

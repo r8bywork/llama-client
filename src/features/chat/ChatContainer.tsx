@@ -5,11 +5,11 @@ import ChatArea from '../../shared/ChatArea/ChatArea';
 import Input from '../../shared/Input/Input';
 import styles from './ChatContainer.module.scss';
 import axios from 'axios';
+import { MessageType } from '../../shared/interfaces/interfaces';
+import { updateMessagesWithAiResponse } from '../../utils/utils';
 
 const ChatContainer = () => {
-  const [messages, setMessages] = useState<
-    { id: number; sender: string; text: string; date: Date }[]
-  >([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -42,17 +42,13 @@ const ChatContainer = () => {
               .split('\n')
               .filter(Boolean)
               .map((line: string) => JSON.parse(line));
-            const lastParsedLine: { response: string } = parsedLines[parsedLines.length - 1];
-            console.log(parsedLines);
-
+            // console.log(parsedLines);
             setMessages((prevMessages) => {
-              const updatedMessages = [...prevMessages];
-              updatedMessages[lastAiMessage] = {
-                ...updatedMessages[lastAiMessage],
-                sender: 'ai',
-                text: `${updatedMessages[lastAiMessage]?.text || ''}${lastParsedLine.response}`,
-                date: new Date(),
-              };
+              const updatedMessages = updateMessagesWithAiResponse(
+                prevMessages,
+                parsedLines,
+                lastAiMessage,
+              );
               return updatedMessages;
             });
           },
