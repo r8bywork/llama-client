@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { v4 } from 'uuid';
-import { iChatArea } from '../interfaces/interfaces';
 import Message from './Message';
 import styles from './styles/ChatArea.module.scss';
 
-const ChatArea: React.FC<iChatArea> = ({ messages }) => {
+export interface ChatAreaProps {
+  messages: { id: number; sender: string; text: string; date: Date }[];
+}
+const ChatArea = ({ messages }: ChatAreaProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,6 +27,7 @@ const ChatArea: React.FC<iChatArea> = ({ messages }) => {
             key={v4()}
             text={message.text}
             sender={message.sender}
+            date={message.date}
           />
         ))}
       </div>

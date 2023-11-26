@@ -1,19 +1,15 @@
-// ```python print("Hello, World!") ````
-// В этом коде используется `print` функция в Python для вывода строки на экран. Эта строка содержит текст "Hello, World!", который будет печататься на экране с помощью `print`.
-import classNames from 'classnames';
-import React from 'react';
+// ```python print("Hello, World!") ``` example code block
 import { v4 } from 'uuid';
 import CodeBlock from '../CodeBlock/CodeBlock';
 import TextBlock from '../TextBlock/TextBlock';
-import { iMessage } from '../interfaces/interfaces';
 import styles from './styles/Message.module.scss';
 
-const Message: React.FC<iMessage> = ({ text, sender }) => {
-  const messageClass = classNames(styles.Message, {
-    [styles.UserMessage]: sender === 'user',
-    [styles.AiMessage]: sender === 'ai',
-  });
-
+export interface messageProps {
+  text: string;
+  sender: string;
+  date: Date;
+}
+const Message = ({ text, sender, date }: messageProps) => {
   // test
   // const codeBlockRegex = /```([a-zA-Z]*)\n([\s\S]*?)\n```/gm;
   // const codeBlockRegex = /`{0,3}([a-zA-Z]*)?\n([\s\S]*?)\n`{0,3}/g;
@@ -25,7 +21,10 @@ const Message: React.FC<iMessage> = ({ text, sender }) => {
   const codeBlockRegex = /`{1,3}([\s\S]*?)`{1,3}/gm;
   const parts = text.split(codeBlockRegex).filter(Boolean);
   return (
-    <div className={messageClass}>
+    <div className={styles.message}>
+      <div className={styles.messageInfo}>
+        {sender} {date.toLocaleString('ru-RU')}
+      </div>
       {parts.map((part, index) => {
         const language = parts[index - 1];
         switch (index % 2) {

@@ -1,18 +1,12 @@
-.Message {
-  display: flex;
-  flex-direction: column;
+.message {
   color: #e3e3e3;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 400;
   border-radius: 15px;
   margin: 10px;
   padding: 24px 24px;
-}
-
-// .UserMessage {
-// color: #fff;
-// }
-
-.AiMessage {
-  background-color: #131314;
+  &Info {
+    color: #d0bcff;
+    padding-bottom: 15px;
+  }
 }

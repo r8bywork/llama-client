@@ -7,7 +7,9 @@ import styles from './ChatContainer.module.scss';
 import axios from 'axios';
 
 const ChatContainer = () => {
-  const [messages, setMessages] = useState<{ id: number; sender: string; text: string }[]>([]);
+  const [messages, setMessages] = useState<
+    { id: number; sender: string; text: string; date: Date }[]
+  >([]);
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -18,7 +20,12 @@ const ChatContainer = () => {
 
     setMessages((prevMessages) => [
       ...prevMessages,
-      { id: prevMessages.length + 1, sender: 'user', text: prompt },
+      {
+        id: prevMessages.length + 1,
+        sender: 'user',
+        text: prompt,
+        date: new Date(),
+      },
     ]);
 
     await axios
@@ -31,19 +38,20 @@ const ChatContainer = () => {
         },
         {
           onDownloadProgress(data) {
-            const parsedLines = data.event.currentTarget.response
+            const parsedLines: [] = data.event.currentTarget.response
               .split('\n')
               .filter(Boolean)
               .map((line: string) => JSON.parse(line));
-
             const lastParsedLine: { response: string } = parsedLines[parsedLines.length - 1];
-            console.log(lastParsedLine.response);
+            console.log(parsedLines);
+
             setMessages((prevMessages) => {
               const updatedMessages = [...prevMessages];
               updatedMessages[lastAiMessage] = {
                 ...updatedMessages[lastAiMessage],
                 sender: 'ai',
                 text: `${updatedMessages[lastAiMessage]?.text || ''}${lastParsedLine.response}`,
+                date: new Date(),
               };
               return updatedMessages;
             });
