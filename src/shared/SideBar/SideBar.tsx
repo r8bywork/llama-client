@@ -1,13 +1,15 @@
 import classNames from 'classnames';
-import React from 'react';
 import { v4 } from 'uuid';
 import ChatIcon from '../../assets/Chat.svg?react';
 import { items } from '../../settings/SideBar';
 import Button from '../Button/Button';
-import { iSideBar } from '../interfaces/interfaces';
 import styles from './SideBar.module.scss';
 
-const SideBar: React.FC<iSideBar> = ({ isOpen }) => {
+interface SideBarProps {
+  isOpen: boolean;
+}
+
+const SideBar = ({ isOpen }: SideBarProps) => {
   const getSidebarClassNames = (isOpen: boolean) => {
     return classNames(styles.sidebar, {
       [styles.open]: isOpen,

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import SendIcon from '../../assets/Send.svg?react';
 import Button from '../../shared/Button/Button';
 import ChatArea from '../../shared/ChatArea/ChatArea';
@@ -6,23 +6,25 @@ import Input from '../../shared/Input/Input';
 import styles from './ChatContainer.module.scss';
 import axios from 'axios';
 import { MessageType } from '../../shared/interfaces/interfaces';
-import { updateMessagesWithAiResponse } from '../../utils/utils';
+import { concatenateResponses, updateMessagesWithAiResponse } from '../../utils/utils';
+import { v4 } from 'uuid';
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
-  const prompt = useRef<HTMLInputElement>(null);
+  const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSendMessage = async () => {
     const lastAiMessage = messages.length + 1;
     setLoading(true);
+    setPrompt('');
 
     setMessages((prevMessages) => [
       ...prevMessages,
       {
-        id: prevMessages.length + 1,
+        id: v4(),
         sender: 'user',
-        text: prompt.current!.value,
+        text: prompt,
         date: new Date(),
       },
     ]);
@@ -32,16 +34,14 @@ const ChatContainer = () => {
         'http://localhost:11434/api/generate',
         {
           model: 'orca-mini',
-          prompt: prompt.current?.value,
+          prompt: prompt,
           stream: true,
         },
         {
           onDownloadProgress(data) {
-            const parsedLines: [] = data.event.currentTarget.response
-              .split('\n')
-              .filter(Boolean)
-              .map((line: string) => JSON.parse(line));
-            // console.log(parsedLines);
+            const parsedLines: { response: string }[] = concatenateResponses(
+              data.event.currentTarget.response,
+            );
             setMessages((prevMessages) => {
               const updatedMessages = updateMessagesWithAiResponse(
                 prevMessages,
@@ -57,7 +57,10 @@ const ChatContainer = () => {
         console.error(err);
       });
     setLoading(false);
-    prompt.current!.value = '';
+  };
+
+  const handleChangeInput = (prompt: string) => {
+    setPrompt(prompt);
   };
 
   return (
@@ -70,6 +73,7 @@ const ChatContainer = () => {
           <Input
             loading={loading}
             prompt={prompt}
+            onHandleChange={handleChangeInput}
             style={{ margin: '15px' }}
           />
           <Button

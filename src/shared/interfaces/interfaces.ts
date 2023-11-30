@@ -11,7 +11,7 @@ export interface iButton {
 }
 
 export interface MessageType {
-  id: number;
+  id: string;
   sender: string;
   text: string;
   date: Date;

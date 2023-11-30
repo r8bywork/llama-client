@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { v4 } from 'uuid';
 import Message from './Message';
 import styles from './styles/ChatArea.module.scss';
 import { MessageType } from '../interfaces/interfaces';
@@ -25,7 +24,7 @@ const ChatArea = ({ messages }: ChatAreaProps) => {
       >
         {messages.map((message) => (
           <Message
-            key={v4()}
+            key={message.id}
             text={message.text}
             sender={message.sender}
             date={message.date}
