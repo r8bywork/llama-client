@@ -1,4 +1,3 @@
-import React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { shadesOfPurple } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
@@ -7,7 +6,7 @@ interface CodeBlockProps {
   code: string;
 }
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ language, code }) => {
+const CodeBlock = ({ language, code }: CodeBlockProps) => {
   return (
     <SyntaxHighlighter
       language={language}

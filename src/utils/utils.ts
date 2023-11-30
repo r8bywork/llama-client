@@ -15,19 +15,19 @@ export const concatenateResponses = (data: string): string => {
   }
 };
 
-export function updateMessagesWithAiResponse(
+export const updateMessagesWithAiResponse = (
   prevMessages: MessageType[],
   parsedLines: { response: string }[],
   lastAiMessage: number,
-): MessageType[] {
-  const lastParsedLine: { response: string } = parsedLines[parsedLines.length - 1];
+): MessageType[] => {
+  const newString = parsedLines.map((elem) => elem.response).join('');
   const updatedMessages = [...prevMessages];
   updatedMessages[lastAiMessage] = {
     ...updatedMessages[lastAiMessage],
     sender: 'ai',
-    text: `${updatedMessages[lastAiMessage]?.text || ''}${lastParsedLine.response}`,
+    text: `${newString}`,
     date: new Date(),
   };
 
   return updatedMessages;
-}
+};

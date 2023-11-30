@@ -9,15 +9,8 @@ export interface messageProps {
   sender: string;
   date: Date;
 }
-const Message = ({ text, sender, date }: messageProps) => {
-  // test
-  // const codeBlockRegex = /```([a-zA-Z]*)\n([\s\S]*?)\n```/gm;
-  // const codeBlockRegex = /`{0,3}([a-zA-Z]*)?\n([\s\S]*?)\n`{0,3}/g;
-  // const codeBlockRegex = /`{0,3}\s*([a-zA-Z]*)?\n([\s\S]*?)\n*`{0,3}/g;
-  // const codeBlockRegex = /`{0,3}\s*([a-zA-Z]*)?\n([\s\S]*?)\n?\s*`{0,3}/g;
-  // const codeBlockRegex = /`{0,3}\s*([a-zA-Z]*)?\n([\s\S]*?)\n\s*`{0,3}/g;
 
-  // good
+const Message = ({ text, sender, date }: messageProps) => {
   const codeBlockRegex = /`{1,3}([\s\S]*?)`{1,3}/gm;
   const parts = text.split(codeBlockRegex).filter(Boolean);
   return (
