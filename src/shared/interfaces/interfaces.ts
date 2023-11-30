@@ -17,14 +17,6 @@ export interface MessageType {
   date: Date;
 }
 
-export interface iInput {
-  onHandleChange: (input: string) => void;
-  prompt?: string;
-  placeholder?: string;
-  loading?: boolean;
-  style?: CSSProperties;
-}
-
 export interface iSideBar {
   isOpen: boolean;
 }

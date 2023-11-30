@@ -1,18 +1,22 @@
-import React from 'react';
-import { iInput } from '../interfaces/interfaces';
+import { CSSProperties, RefObject } from 'react';
 import styles from './Input.module.scss';
 
-const Input: React.FC<iInput> = ({ onHandleChange, prompt, placeholder, loading, style }) => {
+export interface iInput {
+  onHandleChange?: (input: string) => void;
+  prompt?: RefObject<HTMLInputElement>;
+  placeholder?: string;
+  loading?: boolean;
+  style?: CSSProperties;
+}
+
+const Input = ({ prompt, placeholder, loading, style }: iInput) => {
   return (
     <input
+      ref={prompt}
       className={styles.messageContainer}
       style={style}
       type='text'
-      value={loading ? 'Generate response...' : prompt}
       placeholder={placeholder ?? 'Send a message'}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        onHandleChange(e.target.value);
-      }}
       disabled={loading}
     />
   );

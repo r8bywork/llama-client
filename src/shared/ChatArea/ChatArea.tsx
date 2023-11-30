@@ -2,9 +2,10 @@ import { useEffect, useRef } from 'react';
 import { v4 } from 'uuid';
 import Message from './Message';
 import styles from './styles/ChatArea.module.scss';
+import { MessageType } from '../interfaces/interfaces';
 
 export interface ChatAreaProps {
-  messages: { id: number; sender: string; text: string; date: Date }[];
+  messages: MessageType[];
 }
 const ChatArea = ({ messages }: ChatAreaProps) => {
   const ref = useRef<HTMLDivElement>(null);

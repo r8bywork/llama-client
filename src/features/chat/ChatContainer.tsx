@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import SendIcon from '../../assets/Send.svg?react';
 import Button from '../../shared/Button/Button';
 import ChatArea from '../../shared/ChatArea/ChatArea';
@@ -10,12 +10,11 @@ import { updateMessagesWithAiResponse } from '../../utils/utils';
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
-  const [prompt, setPrompt] = useState<string>('');
+  const prompt = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSendMessage = async () => {
     const lastAiMessage = messages.length + 1;
-    setPrompt('');
     setLoading(true);
 
     setMessages((prevMessages) => [
@@ -23,7 +22,7 @@ const ChatContainer = () => {
       {
         id: prevMessages.length + 1,
         sender: 'user',
-        text: prompt,
+        text: prompt.current!.value,
         date: new Date(),
       },
     ]);
@@ -33,7 +32,7 @@ const ChatContainer = () => {
         'http://localhost:11434/api/generate',
         {
           model: 'orca-mini',
-          prompt: prompt,
+          prompt: prompt.current?.value,
           stream: true,
         },
         {
@@ -58,10 +57,7 @@ const ChatContainer = () => {
         console.error(err);
       });
     setLoading(false);
-  };
-
-  const onHandleChange = (input: string) => {
-    setPrompt(input);
+    prompt.current!.value = '';
   };
 
   return (
@@ -73,16 +69,13 @@ const ChatContainer = () => {
         <div className={styles.inputContainer}>
           <Input
             loading={loading}
-            onHandleChange={onHandleChange}
             prompt={prompt}
             style={{ margin: '15px' }}
           />
           <Button
-            // text={'asd'}
             onHandleClick={handleSendMessage}
             styles={{ padding: '16px' }}
             secondary
-            // filled
             Icon={SendIcon}
           />
         </div>
