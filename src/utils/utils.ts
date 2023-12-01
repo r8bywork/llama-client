@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import { MessageType } from '../shared/interfaces/interfaces';
+import axios from 'axios';
 
 export const concatenateResponses = (data: string): { response: string }[] => {
   const responses = data
@@ -25,4 +26,16 @@ export const updateMessagesWithAiResponse = (
   };
 
   return updatedMessages;
+};
+
+export const addMessageFromUser = (prompt: string, prevMessages: MessageType[]): MessageType[] => {
+  return [
+    ...prevMessages,
+    {
+      id: v4(),
+      sender: 'user',
+      text: prompt,
+      date: new Date(),
+    },
+  ];
 };

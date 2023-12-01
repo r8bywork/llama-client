@@ -6,8 +6,11 @@ import Input from '../../shared/Input/Input';
 import styles from './ChatContainer.module.scss';
 import axios from 'axios';
 import { MessageType } from '../../shared/interfaces/interfaces';
-import { concatenateResponses, updateMessagesWithAiResponse } from '../../utils/utils';
-import { v4 } from 'uuid';
+import {
+  addMessageFromUser,
+  concatenateResponses,
+  updateMessagesWithAiResponse,
+} from '../../utils/utils';
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
@@ -27,25 +30,8 @@ const ChatContainer = () => {
       });
   };
 
-  useEffect(() => {
-    getModels();
-  }, []);
-
-  const handleSendMessage = async () => {
+  const generateAiResponse = async () => {
     const lastAiMessage = messages.length + 1;
-    setLoading(true);
-    setPrompt('');
-
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      {
-        id: v4(),
-        sender: 'user',
-        text: prompt,
-        date: new Date(),
-      },
-    ]);
-
     await axios
       .post(
         'http://localhost:11434/api/generate',
@@ -60,12 +46,7 @@ const ChatContainer = () => {
               data.event.currentTarget.response,
             );
             setMessages((prevMessages) => {
-              const updatedMessages = updateMessagesWithAiResponse(
-                prevMessages,
-                parsedLines,
-                lastAiMessage,
-              );
-              return updatedMessages;
+              return updateMessagesWithAiResponse(prevMessages, parsedLines, lastAiMessage);
             });
           },
         },
@@ -73,12 +54,23 @@ const ChatContainer = () => {
       .catch((err) => {
         console.error(err);
       });
+  };
+
+  const handleSendMessage = async () => {
+    setLoading(true);
+    setPrompt('');
+    setMessages((prevMessages) => addMessageFromUser(prompt, prevMessages));
+    await generateAiResponse();
     setLoading(false);
   };
 
   const handleChangeInput = (prompt: string) => {
     setPrompt(prompt);
   };
+
+  useEffect(() => {
+    getModels();
+  }, []);
 
   return (
     <div className={styles.background}>
