@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SendIcon from '../../assets/Send.svg?react';
 import Button from '../../shared/Button/Button';
 import ChatArea from '../../shared/ChatArea/ChatArea';
@@ -13,6 +13,23 @@ const ChatContainer = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [models, setModels] = useState<string[]>([]);
+
+  const getModels = async () => {
+    await axios
+      .get('http://localhost:11434/api/tags')
+      .then((res) => {
+        const modelsArray = res.data.models.map((elem: { name: string }) => elem.name);
+        setModels(modelsArray);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getModels();
+  }, []);
 
   const handleSendMessage = async () => {
     const lastAiMessage = messages.length + 1;
