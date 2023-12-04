@@ -9,6 +9,7 @@ import { MessageType } from '../../shared/interfaces/interfaces';
 import {
   addMessageFromUser,
   concatenateResponses,
+  getModels,
   updateMessagesWithAiResponse,
 } from '../../utils/utils';
 
@@ -17,18 +18,6 @@ const ChatContainer = () => {
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [models, setModels] = useState<string[]>([]);
-
-  const getModels = async () => {
-    await axios
-      .get('http://localhost:11434/api/tags')
-      .then((res) => {
-        const modelsArray = res.data.models.map((elem: { name: string }) => elem.name);
-        setModels(modelsArray);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   const generateAiResponse = async () => {
     const lastAiMessage = messages.length + 1;
@@ -69,8 +58,15 @@ const ChatContainer = () => {
   };
 
   useEffect(() => {
-    getModels();
+    const ModelResponse = async () => {
+      setModels(await getModels());
+    };
+    ModelResponse();
   }, []);
+
+  useEffect(() => {
+    console.log(models);
+  }, [models]);
 
   return (
     <div className={styles.background}>
