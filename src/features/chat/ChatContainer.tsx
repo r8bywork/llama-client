@@ -101,7 +101,7 @@ const ChatContainer = () => {
         </div>
         <Switcher
           handleChangeModel={handleChangeModel}
-          model={currentModel}
+          model={currentModel || 'Download model'}
         />
       </div>
     </div>
