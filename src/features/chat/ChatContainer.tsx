@@ -1,10 +1,10 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import SendIcon from '../../assets/Send.svg?react';
 import Button from '../../shared/Button/Button';
 import ChatArea from '../../shared/ChatArea/ChatArea';
 import Input from '../../shared/Input/Input';
-import styles from './ChatContainer.module.scss';
-import axios from 'axios';
+import Switcher from '../../shared/Switcher/Switcher';
 import { MessageType } from '../../shared/interfaces/interfaces';
 import {
   addMessageFromUser,
@@ -12,12 +12,14 @@ import {
   getModels,
   updateMessagesWithAiResponse,
 } from '../../utils/utils';
+import styles from './ChatContainer.module.scss';
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [models, setModels] = useState<string[]>([]);
+  const [currentModel, setCurrentModel] = useState<string>();
 
   const generateAiResponse = async () => {
     const lastAiMessage = messages.length + 1;
@@ -25,7 +27,7 @@ const ChatContainer = () => {
       .post(
         'http://localhost:11434/api/generate',
         {
-          model: 'orca-mini',
+          model: currentModel,
           prompt: prompt,
           stream: true,
         },
@@ -57,15 +59,24 @@ const ChatContainer = () => {
     setPrompt(prompt);
   };
 
+  const handleChangeModel = () => {
+    setCurrentModel(
+      models[(models.findIndex((model) => model === currentModel) + 1) % models.length],
+    );
+  };
+
   useEffect(() => {
     const ModelResponse = async () => {
-      setModels(await getModels());
+      const res = await getModels();
+      setModels(res);
+      setCurrentModel(res[0]);
     };
     ModelResponse();
   }, []);
 
   useEffect(() => {
     console.log(models);
+    console.log(currentModel);
   }, [models]);
 
   return (
@@ -88,6 +99,10 @@ const ChatContainer = () => {
             Icon={SendIcon}
           />
         </div>
+        <Switcher
+          handleChangeModel={handleChangeModel}
+          model={currentModel}
+        />
       </div>
     </div>
   );
